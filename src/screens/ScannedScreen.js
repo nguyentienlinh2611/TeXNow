@@ -5,7 +5,6 @@ import {
     ActivityIndicator, Text
 } from 'react-native';
 import {getTeXFromImage} from "../api";
-import Katex from 'react-native-katex';
 import MathJax from 'react-native-mathjax';
 
 const inlineStyle =`

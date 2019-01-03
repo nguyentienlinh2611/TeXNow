@@ -3,6 +3,8 @@ import {View, Text, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import Ripple from 'react-native-material-ripple';
 import Header from '../components/Header';
+import ImagePicker from 'react-native-image-picker';
+
 
 export default class DocumentsScreen extends PureComponent {
     static navigationOptions = {
@@ -26,7 +28,7 @@ export default class DocumentsScreen extends PureComponent {
                 }}>
                     <Image style={{width: 200, height: 200, marginTop: 50}} source={require('../../assets/imgs/empty.jpg')} />
                     <Text style={{ fontFamily: 'OpenSans-Italic' }}>Bạn chưa có tài liệu nào được chụp gần đây!</Text>
-                    <Ripple onPress={() => navigation.navigate('camera')} rippleColor='#FFFFFF' rippleOpacity={0.54} style={{
+                    <Ripple onPress={this.takePicture} rippleColor='#FFFFFF' rippleOpacity={0.54} style={{
                         position: 'absolute',
                         backgroundColor: '#4652ED',
                         padding: 15,
@@ -44,5 +46,23 @@ export default class DocumentsScreen extends PureComponent {
                 </View>
             </View>
         )
+    }
+
+    takePicture = () => {
+        const {navigation} = this.props;
+        const options = {
+            title: "Chọn ảnh",
+            takePhotoButtonTitle: "Từ máy ảnh",
+            chooseFromLibraryButtonTitle: "Từ thư viện",
+            mediaType: "photo",
+            storageOptions: {
+                skipBackup: true,
+                path: 'TeXNow'
+            }
+        };
+        ImagePicker.showImagePicker(options,(response) => {
+            console.log(response);
+            navigation.navigate('scanned',{imageUri: response.uri, imageBase64: response.data});
+        });
     }
 }
