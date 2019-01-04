@@ -40,7 +40,9 @@ export default class DocumentsScreen extends PureComponent {
             if (documents === undefined) {
                 documents = [];
             }
-            this.setState({documents: documents});
+            if (documents.length !== prevState.documents.length) {
+                this.setState({documents: documents});
+            }
         });
     }
 
@@ -76,14 +78,14 @@ export default class DocumentsScreen extends PureComponent {
             );
         } else {
             listView = (<FlatList
-                                    numColumns={2}
-                                    keyExtractor={(item, index) => index.toString()}
-                                    contentContainerStyle={{
-                                      justifyContent: 'flex-start',
-                                      // flexDirection: 'row',
-                                      width: dp.widthPercentageToDP('100%')
-                                  }}
-                                  data={documents} renderItem={this.renderItem}/>)
+                numColumns={2}
+                keyExtractor={(item, index) => index.toString()}
+                contentContainerStyle={{
+                    justifyContent: 'flex-start',
+                    // flexDirection: 'row',
+                    width: dp.widthPercentageToDP('100%')
+                }}
+                data={documents} renderItem={this.renderItem}/>)
         }
         return (
             <View style={{
